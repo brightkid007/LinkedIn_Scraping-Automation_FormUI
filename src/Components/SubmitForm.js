@@ -43,14 +43,18 @@ const SubmitForm = () => {
         console.log('Form Data Submitted:', formData);
     };
 
-    const handleCheckboxChange = (countryName) => {
-        setSelectedCountries((prevSelectedCountries) => {
-            if (prevSelectedCountries.includes(countryName)) {
-                return prevSelectedCountries.filter((name) => name !== countryName);
-            } else {
-                return [...prevSelectedCountries, countryName];
-            }
-        });
+    // const handleCheckboxChange = (countryName) => {
+    //     setSelectedCountries((prevSelectedCountries) => {
+    //         if (prevSelectedCountries.includes(countryName)) {
+    //             return prevSelectedCountries.filter((name) => name !== countryName);
+    //         } else {
+    //             return [...prevSelectedCountries, countryName];
+    //         }
+    //     });
+    // };
+
+    const handleRadioChange = (countryCode) => {
+        setSelectedCountries(countryCode); // Update the selected country
     };
 
     const handleCompanyChange = (index, field, value) => {
@@ -94,7 +98,7 @@ const SubmitForm = () => {
                 <div className='select-countries'>Select Country Codes</div>
 
                 <div className='checkbox-container'>
-                    {countries.map((country) => (
+                    {/* {countries.map((country) => (
                         <div key={country.code}>
                             <input
                                 type="checkbox"
@@ -102,6 +106,19 @@ const SubmitForm = () => {
                                 value={country.name}
                                 checked={selectedCountries.includes(country.code)}
                                 onChange={() => handleCheckboxChange(country.code)}
+                            />
+                            <label htmlFor={country.code}>{country.name}</label>
+                        </div>
+                    ))} */}
+                    {countries.map((country) => (
+                        <div key={country.code}>
+                            <input
+                                type="radio"
+                                id={country.code}
+                                name="countries" // Group radios for single selection
+                                value={country.name}
+                                checked={selectedCountries === country.code} // Single selection logic
+                                onChange={() => handleRadioChange(country.code)} // Updated handler
                             />
                             <label htmlFor={country.code}>{country.name}</label>
                         </div>
