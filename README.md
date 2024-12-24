@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # LinkedIn_Scraping-Automation_FormUI
 =======
 # Getting Started with Create React App
@@ -72,3 +73,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 >>>>>>> e9bbf97 (first commit)
+=======
+# LinkedIn_Scraping-Automation_FormUI
+>>>>>>> 3e62828662e162d5b519b6118f02a133814caf82
