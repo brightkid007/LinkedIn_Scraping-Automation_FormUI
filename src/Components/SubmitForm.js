@@ -9,7 +9,7 @@ const SubmitForm = () => {
     const [subject, setSubject] = useState('');
     const [selectedCountries, setSelectedCountries] = useState([]);
     const [companyPairs, setCompanyPairs] = useState(
-        Array(3).fill({ companyURL: '', companyType: '' })
+        Array(1).fill({ companyURL: '', companyType: '' })
     );
 
     const [loading, setLoading] = useState(false);
@@ -126,7 +126,7 @@ const SubmitForm = () => {
                 </div>
             </div>
 
-            {[...Array(3)].map((_, index) => (
+            {[...Array(1)].map((_, index) => (
                 <div key={index} className='company-pair-container'>
                     <div className='input-group'>
                         <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
