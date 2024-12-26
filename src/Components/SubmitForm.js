@@ -25,6 +25,7 @@ const SubmitForm = () => {
         const formData = {
             email,
             projectNumber,
+            subject,
             title,
             selectedCountries,
             companyPairs,
@@ -91,7 +92,7 @@ const SubmitForm = () => {
                 <input
                     type="text"
                     id="projectNumber"
-                    value={subject}
+                    value={projectNumber}
                     onChange={(e) => setProjectNumber(e.target.value)}
                     required
                 />
@@ -113,7 +114,7 @@ const SubmitForm = () => {
                 <input
                     type="text"
                     id="title"
-                    value={subject}
+                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
                 />
