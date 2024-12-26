@@ -28,7 +28,7 @@ const SubmitForm = () => {
         };
 
         try {
-            const response = await axios.post('https://linkedin-scraping-automation-microservice.onrender.com/package-location', formData, {
+            const response = await axios.post('https://linkedin-scraping-automation-microservice.onrender.com/employees', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
