@@ -6,7 +6,9 @@ import '../css/SubmitForm.css'
 
 const SubmitForm = () => {
     const [email, setEmail] = useState('');
+    const [projectNumber, setProjectNumber] = useState('');
     const [subject, setSubject] = useState('');
+    const [title, setTitle] = useState('');
     const [selectedCountries, setSelectedCountries] = useState([]);
     const [companyPairs, setCompanyPairs] = useState(
         Array(1).fill({ companyURL: '', companyType: '' })
@@ -22,7 +24,8 @@ const SubmitForm = () => {
 
         const formData = {
             email,
-            subject,
+            projectNumber,
+            title,
             selectedCountries,
             companyPairs,
         };
@@ -84,12 +87,34 @@ const SubmitForm = () => {
             </div>
 
             <div className='form-group'>
-                <label htmlFor="subject">Job Subject</label>
+                <label htmlFor="projectNumber">Project Number</label>
+                <input
+                    type="text"
+                    id="projectNumber"
+                    value={subject}
+                    onChange={(e) => setProjectNumber(e.target.value)}
+                    required
+                />
+            </div>
+
+            <div className='form-group'>
+                <label htmlFor="subject">Project Subject</label>
                 <input
                     type="text"
                     id="subject"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    required
+                />
+            </div>
+
+            <div className='form-group'>
+                <label htmlFor="title">Job Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    value={subject}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                 />
             </div>
