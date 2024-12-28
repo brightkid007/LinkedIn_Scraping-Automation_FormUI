@@ -34,7 +34,7 @@ const SubmitForm = () => {
         };
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employes`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employees`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
