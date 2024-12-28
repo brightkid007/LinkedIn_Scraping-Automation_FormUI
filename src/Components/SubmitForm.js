@@ -10,9 +10,11 @@ const SubmitForm = () => {
     const [subject, setSubject] = useState('');
     const [title, setTitle] = useState('');
     const [selectedCountries, setSelectedCountries] = useState([]);
-    const [companyPairs, setCompanyPairs] = useState(
-        Array(1).fill({ companyURL: '', companyType: '' })
-    );
+    const [companyPairs, setCompanyPairs] = useState([{ companyURL: '', companyType: '' }]);
+
+    // const [companyPairs, setCompanyPairs] = useState(
+    //     Array(1).fill({ companyURL: '', companyType: '' })
+    // );
 
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +34,7 @@ const SubmitForm = () => {
         };
 
         try {
-            const response = await axios.post('https://linkedin-scraping-automation-microservice.onrender.com/employees', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employes`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -47,19 +49,19 @@ const SubmitForm = () => {
         console.log('Form Data Submitted:', formData);
     };
 
-    // const handleCheckboxChange = (countryName) => {
-    //     setSelectedCountries((prevSelectedCountries) => {
-    //         if (prevSelectedCountries.includes(countryName)) {
-    //             return prevSelectedCountries.filter((name) => name !== countryName);
-    //         } else {
-    //             return [...prevSelectedCountries, countryName];
-    //         }
-    //     });
-    // };
-
-    const handleRadioChange = (countryCode) => {
-        setSelectedCountries(countryCode); // Update the selected country
+    const handleCheckboxChange = (countryName) => {
+        setSelectedCountries((prevSelectedCountries) => {
+            if (prevSelectedCountries.includes(countryName)) {
+                return prevSelectedCountries.filter((name) => name !== countryName);
+            } else {
+                return [...prevSelectedCountries, countryName];
+            }
+        });
     };
+
+    // const handleRadioChange = (countryCode) => {
+    //     setSelectedCountries(countryCode); // Update the selected country
+    // };
 
     const handleCompanyChange = (index, field, value) => {
         setCompanyPairs((prevCompanyPairs) => {
@@ -70,6 +72,15 @@ const SubmitForm = () => {
             };
             return updatedCompanyPairs;
         });
+    };
+
+
+    const addCompanyPair = () => {
+        setCompanyPairs([...companyPairs, { companyURL: '', companyType: '' }]);
+    };
+
+    const removeCompanyPair = (index) => {
+        setCompanyPairs((prevCompanyPairs) => prevCompanyPairs.filter((_, i) => i !== index));
     };
 
     return (
@@ -124,7 +135,7 @@ const SubmitForm = () => {
                 <div className='select-countries'>Select Country Codes</div>
 
                 <div className='checkbox-container'>
-                    {/* {countries.map((country) => (
+                    {countries.map((country) => (
                         <div key={country.code}>
                             <input
                                 type="checkbox"
@@ -135,8 +146,8 @@ const SubmitForm = () => {
                             />
                             <label htmlFor={country.code}>{country.name}</label>
                         </div>
-                    ))} */}
-                    {countries.map((country) => (
+                    ))}
+                    {/* {countries.map((country) => (
                         <div key={country.code}>
                             <input
                                 type="radio"
@@ -148,11 +159,11 @@ const SubmitForm = () => {
                             />
                             <label htmlFor={country.code}>{country.name}</label>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
 
-            {[...Array(1)].map((_, index) => (
+            {/* {[...Array(1)].map((_, index) => (
                 <div key={index} className='company-pair-container'>
                     <div className='input-group'>
                         <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
@@ -182,7 +193,52 @@ const SubmitForm = () => {
                         </select>
                     </div>
                 </div>
+            ))} */}
+
+             {companyPairs.map((pair, index) => (
+                <div key={index} className='company-pair-container'>
+                    <div className='input-group'>
+                        <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
+                        <input
+                            type="text"
+                            id={`companyURL-${index}`}
+                            value={pair.companyURL}
+                            onChange={(e) => handleCompanyChange(index, 'companyURL', e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className='input-group'>
+                        <label htmlFor={`companyType-${index}`}>Type</label>
+                        <select
+                            id={`companyType-${index}`}
+                            value={pair.companyType}
+                            onChange={(e) => handleCompanyChange(index, 'companyType', e.target.value)}
+                            required
+                        >
+                            <option value="">Select a type</option>
+                            {companyTypeOptions.map((type) => (
+                                <option key={type} value={type}>
+                                    {type}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="remove-button"
+                        onClick={() => removeCompanyPair(index)}
+                        disabled={companyPairs.length === 1}
+                    >
+                        X
+                    </button>
+                </div>
             ))}
+
+            <button type="button" className="add-button" onClick={addCompanyPair}>
+                + Add
+            </button>
 
             <div className='button-container'>
                 <button type="submit" disabled={loading}>
