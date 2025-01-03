@@ -110,7 +110,7 @@ const SubmitForm = () => {
             </div>
 
             <div className='form-group'>
-                <label htmlFor="subject">Job Titles</label>
+                <label htmlFor="subject">Project Subject</label>
                 <input
                     type="text"
                     id="subject"
