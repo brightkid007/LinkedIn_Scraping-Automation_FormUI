@@ -10,15 +10,7 @@ const EmployeeExtForm = () => {
     const navigate = useNavigate();
 
     const { email, projectNumber, subject, title, selectedCountries, companyPairs } = location.state || {};
-    // const [email, setEmail] = useState(_email);
-    // const [projectNumber, setProjectNumber] = useState(_projectNumber);
-    // const [subject, setSubject] = useState(_subject);
-    // const [title, setTitle] = useState(_title);
-    // const [selectedCountries, setSelectedCountries] = useState(_selectedCountries);
-    // const [companyPairs, setCompanyPairs] = useState(_companyPairs);
-    const [companyURL, setCompanyURL] = useState('');
     const [jobTitles, setJobTitles] = useState([{ jobTitle: '', type: '' }]);
-    // const { email, projectNumber, subject, title, selectedCountries, companyPairs } = location.state || {};
 
     const formData = {
         email,
@@ -26,8 +18,7 @@ const EmployeeExtForm = () => {
         subject,
         title,
         selectedCountries,
-        companyPairs,
-        companyURL,
+        // companyPairs,
         jobTitles
     };
 
@@ -45,7 +36,6 @@ const EmployeeExtForm = () => {
     };
 
     const handleNewProject = () => {
-        // Clear form data and navigate back to the first form (JobTitleExtForm)
 
         navigate('/', { state: {} });
     };
@@ -72,23 +62,23 @@ const EmployeeExtForm = () => {
     };
 
     const handleJobChange = (index, field, value) => {
-        setCompanyPairs((prevCompanyPairs) => {
-            const updatedCompanyPairs = [...prevCompanyPairs];
-            updatedCompanyPairs[index] = {
-                ...updatedCompanyPairs[index],
+        setJobTitles((prevJobTitles) => {
+            const updatedJobTitles = [...prevJobTitles];
+            updatedJobTitles[index] = {
+                ...updatedJobTitles[index],
                 [field]: value,
             };
-            return updatedCompanyPairs;
+            return updatedJobTitles;
         });
     };
 
 
-    const addCompanyPair = () => {
-        setCompanyPairs([...companyPairs, { companyURL: '', companyName: '' }]);
+    const addJobTitle = () => {
+        setJobTitles([...jobTitles, { jobTitle: '', type: '' }]);
     };
 
-    const removeCompanyPair = (index) => {
-        setCompanyPairs((prevCompanyPairs) => prevCompanyPairs.filter((_, i) => i !== index));
+    const removeJobTitle = (index) => {
+        setJobTitles((prevJobTitles) => prevJobTitles.filter((_, i) => i !== index));
     };
 
     return (
@@ -199,25 +189,25 @@ const EmployeeExtForm = () => {
 
 
 
-            {companyPairs.map((pair, index) => (
+            {jobTitles.map((pair, index) => (
                 <div key={index} className='company-pair-container'>
                     <div className='input-group'>
-                        <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
+                        <label htmlFor={`jobTitle-${index}`}>Job Title-{index + 1}</label>
                         <input
                             type="text"
-                            id={`companyURL-${index}`}
-                            value={pair.companyURL}
-                            onChange={(e) => handleJobChange(index, 'companyURL', e.target.value)}
-                            required1
+                            id={`jobTitle-${index}`}
+                            value={pair.jobTitle}
+                            onChange={(e) => handleJobChange(index, 'jobTitle', e.target.value)}
+                            required
                         />
                     </div>
 
                     <div className='input-group'>
-                        <label htmlFor={`companyType-${index}`}>Type</label>
+                        <label htmlFor={`Type-${index}`}>Type</label>
                         <select
-                            id={`companyType-${index}`}
-                            value={pair.companyType}
-                            onChange={(e) => handleJobChange(index, 'companyType', e.target.value)}
+                            id={`Type-${index}`}
+                            value={pair.type}
+                            onChange={(e) => handleJobChange(index, 'type', e.target.value)}
                             required
                         >
                             <option value="">Select a type</option>
@@ -232,17 +222,17 @@ const EmployeeExtForm = () => {
                     <button
                         type="button"
                         className="remove-button"
-                        onClick={() => removeCompanyPair(index)}
-                        disabled={companyPairs.length === 1}
+                        onClick={() => removeJobTitle(index)}
+                        disabled={jobTitles.length === 1}
                     >
                         X
                     </button>
                 </div>
             ))}
 
-            {/* <button type="button" className="add-button" onClick={addCompanyPair}>
+            <button type="button" className="add-button" onClick={addJobTitle}>
                 + Add
-            </button> */}
+            </button>
 
             <div className='button-container'>
                 <button type="submit" disabled={loading}>
