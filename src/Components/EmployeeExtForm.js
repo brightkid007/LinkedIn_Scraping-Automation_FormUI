@@ -17,7 +17,7 @@ const EmployeeExtForm = () => {
     // const [selectedCountries, setSelectedCountries] = useState(_selectedCountries);
     // const [companyPairs, setCompanyPairs] = useState(_companyPairs);
     const [companyURL, setCompanyURL] = useState('');
-    const [jobTitles, setJobTitles] = useState([]);
+    const [jobTitles, setJobTitles] = useState([{ jobTitle: '', type: '' }]);
     // const { email, projectNumber, subject, title, selectedCountries, companyPairs } = location.state || {};
 
     const formData = {
@@ -71,6 +71,25 @@ const EmployeeExtForm = () => {
         console.log('Form2 Data Submitted:', formData);
     };
 
+    const handleJobChange = (index, field, value) => {
+        setCompanyPairs((prevCompanyPairs) => {
+            const updatedCompanyPairs = [...prevCompanyPairs];
+            updatedCompanyPairs[index] = {
+                ...updatedCompanyPairs[index],
+                [field]: value,
+            };
+            return updatedCompanyPairs;
+        });
+    };
+
+
+    const addCompanyPair = () => {
+        setCompanyPairs([...companyPairs, { companyURL: '', companyName: '' }]);
+    };
+
+    const removeCompanyPair = (index) => {
+        setCompanyPairs((prevCompanyPairs) => prevCompanyPairs.filter((_, i) => i !== index));
+    };
 
     return (
 
@@ -135,7 +154,6 @@ const EmployeeExtForm = () => {
             </div>
 
 
-
             {/* <div className='form-group'>
                 <label htmlFor="title">Job Title Keywords - seperate with spaces</label>
                 <input
@@ -155,7 +173,7 @@ const EmployeeExtForm = () => {
                             type="text"
                             id={`companyURL-${index}`}
                             value={companyPairs[index].companyURL}
-                            onChange={(e) => handleCompanyChange(index, 'companyURL', e.target.value)}
+                            onChange={(e) => handleJobChange(index, 'companyURL', e.target.value)}
                             required
                         />
                     </div>
@@ -165,7 +183,7 @@ const EmployeeExtForm = () => {
                         <select
                             id={`companyType-${index}`}
                             value={companyPairs[index].companyType}
-                            onChange={(e) => handleCompanyChange(index, 'companyType', e.target.value)}
+                            onChange={(e) => handleJobChange(index, 'companyType', e.target.value)}
                             required
                         >
                             <option value="">Select a type</option>
@@ -181,7 +199,7 @@ const EmployeeExtForm = () => {
 
 
 
-            {/* {companyPairs.map((pair, index) => (
+            {companyPairs.map((pair, index) => (
                 <div key={index} className='company-pair-container'>
                     <div className='input-group'>
                         <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
@@ -189,7 +207,7 @@ const EmployeeExtForm = () => {
                             type="text"
                             id={`companyURL-${index}`}
                             value={pair.companyURL}
-                            onChange={(e) => handleCompanyChange(index, 'companyURL', e.target.value)}
+                            onChange={(e) => handleJobChange(index, 'companyURL', e.target.value)}
                             required1
                         />
                     </div>
@@ -199,7 +217,7 @@ const EmployeeExtForm = () => {
                         <select
                             id={`companyType-${index}`}
                             value={pair.companyType}
-                            onChange={(e) => handleCompanyChange(index, 'companyType', e.target.value)}
+                            onChange={(e) => handleJobChange(index, 'companyType', e.target.value)}
                             required
                         >
                             <option value="">Select a type</option>
@@ -220,7 +238,7 @@ const EmployeeExtForm = () => {
                         X
                     </button>
                 </div>
-            ))} */}
+            ))}
 
             {/* <button type="button" className="add-button" onClick={addCompanyPair}>
                 + Add
