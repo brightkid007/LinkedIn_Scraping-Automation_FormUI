@@ -1,11 +1,18 @@
 import './App.css';
-import SubmitForm from './Components/SubmitForm';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import JobTitleExtForm from './Components/JobTitleExtForm';
+import EmployeeExtForm from './Components/EmployeeExtForm';
 
 function App() {
   return (
-    <div className="container">
-      <SubmitForm />
-    </div>
+    <Router>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<JobTitleExtForm />} />
+          <Route path="/employee" element={<EmployeeExtForm />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

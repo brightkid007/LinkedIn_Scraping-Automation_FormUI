@@ -41,7 +41,7 @@ label {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 70%;
+    width: 100%;
 }
 
 .input-group label {
@@ -51,7 +51,7 @@ label {
 .input-group input,
 .input-group select {
     display: inline-block;
-    width: 95%;
+    width: 100%;
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -138,7 +138,8 @@ button[type="submit"]:active {
 
 /* Add Company Button */
 .add-button {
-    background-color: #28a745; /* Green */
+    background-color: #28a745;
+    /* Green */
     color: white;
     border: none;
     border-radius: 5px;
@@ -151,13 +152,15 @@ button[type="submit"]:active {
 }
 
 .add-button:hover {
-    background-color: #218838; /* Darker green */
+    background-color: #218838;
+    /* Darker green */
     transform: scale(1.05);
 }
 
 /* Remove Button */
 .remove-button {
-    background-color: #dc3545; /* Red */
+    background-color: #dc3545;
+    /* Red */
     color: white;
     border: none;
     border-radius: 5px;
@@ -170,12 +173,14 @@ button[type="submit"]:active {
 }
 
 .remove-button:hover {
-    background-color: #c82333; /* Darker red */
+    background-color: #c82333;
+    /* Darker red */
     transform: scale(1.05);
 }
 
 .remove-button:disabled {
-    background-color: #d6d8db; /* Grey */
+    background-color: #d6d8db;
+    /* Grey */
     cursor: not-allowed;
 }
 
@@ -192,6 +197,39 @@ button[type="submit"]:active {
     gap: 15px;
     margin-bottom: 15px;
 }
+
+.offset-button {
+    position: absolute;
+    /* Places the button at a specific location */
+    /* top: 15%; */
+    /* 15% from the top of the screen */
+    left: 15%;
+    /* 15% from the left of the screen */
+    background-color: red;
+    /* Red background */
+    color: white;
+    /* White text */
+    border: none;
+    /* Removes border */
+    border-radius: 5px;
+    /* Adds rounded corners */
+    padding: 10px 15px;
+    /* Adds padding for better size */
+    font-size: 16px;
+    /* Adjusts font size */
+    cursor: pointer;
+    /* Shows pointer on hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    /* Adds a shadow for depth */
+    transition: background-color 0.3s ease;
+    /* Smooth hover effect */
+}
+
+.offset-button:hover {
+    background-color: darkred;
+    /* Darker red on hover */
+}
+
 
 
 @keyframes spin {

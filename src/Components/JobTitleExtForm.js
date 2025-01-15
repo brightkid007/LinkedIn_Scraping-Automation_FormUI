@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import countries from '../data/countries.json';
-import '../css/SubmitForm.css'
+import '../css/JobTitleExtForm.css'
 
-const SubmitForm = () => {
+const JobTitleExtForm = () => {
     const [email, setEmail] = useState('');
     const [projectNumber, setProjectNumber] = useState('');
     const [subject, setSubject] = useState('');
     const [title, setTitle] = useState('');
     const [selectedCountries, setSelectedCountries] = useState([]);
-    const [companyPairs, setCompanyPairs] = useState([{ companyURL: '', companyType: '' }]);
+    const [companyPairs, setCompanyPairs] = useState([{ companyURL: '', companyName: '' }]);
+
+    const navigate = useNavigate();
 
     // const [companyPairs, setCompanyPairs] = useState(
     //     Array(1).fill({ companyURL: '', companyType: '' })
@@ -18,7 +21,7 @@ const SubmitForm = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const companyTypeOptions = ['former', 'current', 'both'];
+    // const companyTypeOptions = ['former', 'current', 'both'];
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,20 +36,21 @@ const SubmitForm = () => {
             companyPairs,
         };
 
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employees`, formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            console.log('Success:', response.data);
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            setLoading(false); // Set loading to false after submission
-        }
+        // try {
+        //     const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employees`, formData, {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //     });
+        //     console.log('Success:', response.data);
+        // } catch (error) {
+        //     console.error('Error:', error);
+        // } finally {
+        //     setLoading(false); // Set loading to false after submission
+        // }
 
         console.log('Form Data Submitted:', formData);
+        navigate('/employee', { state: formData });
     };
 
     const handleCheckboxChange = (countryName) => {
@@ -76,7 +80,7 @@ const SubmitForm = () => {
 
 
     const addCompanyPair = () => {
-        setCompanyPairs([...companyPairs, { companyURL: '', companyType: '' }]);
+        setCompanyPairs([...companyPairs, { companyURL: '', companyName: '' }]);
     };
 
     const removeCompanyPair = (index) => {
@@ -86,7 +90,7 @@ const SubmitForm = () => {
     return (
 
         <form onSubmit={handleSubmit}>
-            <center><h1>Employee Extraction</h1></center>
+            <center><h1>Form1: Relevant Job Title Search</h1></center>
             <div className='form-group'>
                 <label htmlFor="email">Client Email</label>
                 <input
@@ -121,7 +125,7 @@ const SubmitForm = () => {
             </div>
 
             <div className='form-group'>
-                <label htmlFor="title">Role Keywords - seperate with spaces</label>
+                <label htmlFor="title">Job Title Keywords - seperate with spaces</label>
                 <input
                     type="text"
                     id="title"
@@ -132,7 +136,7 @@ const SubmitForm = () => {
             </div>
 
             <div>
-                <div className='select-countries'>Select Country Codes</div>
+                <div className='select-countries'>Select Lead Locations</div>
 
                 <div className='checkbox-container'>
                     {countries.map((country) => (
@@ -147,55 +151,10 @@ const SubmitForm = () => {
                             <label htmlFor={country.code}>{country.name}</label>
                         </div>
                     ))}
-                    {/* {countries.map((country) => (
-                        <div key={country.code}>
-                            <input
-                                type="radio"
-                                id={country.code}
-                                name="countries" // Group radios for single selection
-                                value={country.name}
-                                checked={selectedCountries === country.code} // Single selection logic
-                                onChange={() => handleRadioChange(country.code)} // Updated handler
-                            />
-                            <label htmlFor={country.code}>{country.name}</label>
-                        </div>
-                    ))} */}
                 </div>
             </div>
 
-            {/* {[...Array(1)].map((_, index) => (
-                <div key={index} className='company-pair-container'>
-                    <div className='input-group'>
-                        <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
-                        <input
-                            type="text"
-                            id={`companyURL-${index}`}
-                            value={companyPairs[index].companyURL}
-                            onChange={(e) => handleCompanyChange(index, 'companyURL', e.target.value)}
-                            required
-                        />
-                    </div>
-
-                    <div className='input-group'>
-                        <label htmlFor={`companyType-${index}`}>Type</label>
-                        <select
-                            id={`companyType-${index}`}
-                            value={companyPairs[index].companyType}
-                            onChange={(e) => handleCompanyChange(index, 'companyType', e.target.value)}
-                            required
-                        >
-                            <option value="">Select a type</option>
-                            {companyTypeOptions.map((type) => (
-                                <option key={type} value={type}>
-                                    {type}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-            ))} */}
-
-             {companyPairs.map((pair, index) => (
+            {companyPairs.map((pair, index) => (
                 <div key={index} className='company-pair-container'>
                     <div className='input-group'>
                         <label htmlFor={`companyURL-${index}`}>Company URL-{index + 1}</label>
@@ -209,20 +168,14 @@ const SubmitForm = () => {
                     </div>
 
                     <div className='input-group'>
-                        <label htmlFor={`companyType-${index}`}>Type</label>
-                        <select
-                            id={`companyType-${index}`}
-                            value={pair.companyType}
-                            onChange={(e) => handleCompanyChange(index, 'companyType', e.target.value)}
+                        <label htmlFor={`companyName-${index}`}>Company Name-{index + 1}</label>
+                        <input
+                            type="text"
+                            id={`companyName-${index}`}
+                            value={pair.companyName}
+                            onChange={(e) => handleCompanyChange(index, 'companyName', e.target.value)}
                             required
-                        >
-                            <option value="">Select a type</option>
-                            {companyTypeOptions.map((type) => (
-                                <option key={type} value={type}>
-                                    {type}
-                                </option>
-                            ))}
-                        </select>
+                        />
                     </div>
 
                     <button
@@ -249,4 +202,4 @@ const SubmitForm = () => {
     );
 };
 
-export default SubmitForm;
+export default JobTitleExtForm;
