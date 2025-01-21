@@ -12,21 +12,21 @@ const EmployeeExtForm = () => {
     const { email, projectNumber, subject, title, selectedCountries, companyPairs } = location.state || {};
     const [jobTitles, setJobTitles] = useState([{ jobTitle: '', type: '' }]);
 
+    const [loading, setLoading] = useState(false);
+
+    const companyTypeOptions = ['former', 'current', 'both'];
+
+    const [selectedURL, setSelectedURL] = useState("");
+
     const formData = {
         email,
         projectNumber,
         subject,
         title,
         selectedCountries,
-        // companyPairs,
+        selectedURL,
         jobTitles
     };
-
-    const [loading, setLoading] = useState(false);
-
-    const companyTypeOptions = ['former', 'current', 'both'];
-
-    const [selectedURL, setSelectedURL] = useState("");
 
     const handleSelectChange = (event) => {
         const selectedCompany = companyPairs.find(
@@ -45,18 +45,18 @@ const EmployeeExtForm = () => {
         event.preventDefault();
         setLoading(true);
 
-        // try {
-        //     const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employees`, formData, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //     });
-        //     console.log('Success:', response.data);
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // } finally {
-        //     setLoading(false);
-        // }
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/lead-extraction`, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('Success:', response.data);
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
 
         console.log('Form2 Data Submitted:', formData);
     };

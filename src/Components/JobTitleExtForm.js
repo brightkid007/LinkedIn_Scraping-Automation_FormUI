@@ -36,29 +36,43 @@ const JobTitleExtForm = () => {
             companyPairs,
         };
 
-        // try {
-        //     const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/employees`, formData, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //     });
-        //     console.log('Success:', response.data);
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // } finally {
-        //     setLoading(false); // Set loading to false after submission
-        // }
+        console.log(formData);
+
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/job-titles`, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('Success:', response.data);
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setLoading(false); // Set loading to false after submission
+        }
 
         console.log('Form Data Submitted:', formData);
         navigate('/employee', { state: formData });
     };
 
-    const handleCheckboxChange = (countryName) => {
+    // const handleCheckboxChange = (country) => {
+    //     setSelectedCountries((prevSelectedCountries) => {
+    //         if (prevSelectedCountries.includes(country)) {
+    //             return prevSelectedCountries.filter((con) => con !== country);
+    //         } else {
+    //             return [...prevSelectedCountries, country];
+    //         }
+    //     });
+    // };
+
+    const handleCheckboxChange = (country) => {
         setSelectedCountries((prevSelectedCountries) => {
-            if (prevSelectedCountries.includes(countryName)) {
-                return prevSelectedCountries.filter((name) => name !== countryName);
+            if (prevSelectedCountries.some((con) => con.code === country.code)) {
+                // Remove the country if it exists in the array
+                return prevSelectedCountries.filter((con) => con.code !== country.code);
             } else {
-                return [...prevSelectedCountries, countryName];
+                // Add the country to the array
+                return [...prevSelectedCountries, country];
             }
         });
     };
@@ -145,8 +159,8 @@ const JobTitleExtForm = () => {
                                 type="checkbox"
                                 id={country.code}
                                 value={country.name}
-                                checked={selectedCountries.includes(country.code)}
-                                onChange={() => handleCheckboxChange(country.code)}
+                                checked={selectedCountries.includes(country)}
+                                onChange={() => handleCheckboxChange(country)}
                             />
                             <label htmlFor={country.code}>{country.name}</label>
                         </div>
